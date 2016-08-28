@@ -30,7 +30,9 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
-#if the app shuts down it closes the db
+# if the app shuts down it closes the db
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -38,29 +40,35 @@ def close_connection(exception):
         db.close()
 
 
-# the form creator class(I could not applied the validator functions thats why I placed them in the html code)
+# the form creator class(I could not applied the validator functions thats
+# why I placed them in the html code)
 class MyForm(Form):
     title = TextAreaField('Title')
     story = TextAreaField('Story')
     criteria = TextAreaField('Criteria')
     value = IntegerField('Business Value')
     estimation = FloatField('Estimation(h)')
-    status = SelectField('Status', choices=[('Planning', 'Planning'), ('To Do', 'To Do'),('In Progress', 'In Progress'), ('Review', 'Review'),('Done', 'Done')])
+    status = SelectField('Status', choices=[('Planning', 'Planning'), ('To Do', 'To Do'), (
+        'In Progress', 'In Progress'), ('Review', 'Review'), ('Done', 'Done')])
     submit = SubmitField()
 
 
-#root redirection to the list function
+# root redirection to the list function
 @app.route('/')
 def start():
-   return redirect(url_for('list'))
+    return redirect(url_for('list'))
 
-#as I told before...
+# as I told before...
+
+
 @app.route('/list')
 def list():
-   rows = query_db("select * from user")
-   return render_template('list.html',rows=rows)
+    rows = query_db("select * from user")
+    return render_template('list.html', rows=rows)
 
-#deletes entry based on it' id
+# deletes entry based on it' id
+
+
 @app.route('/list', methods=['POST'])
 def delete_entry():
     data = request.form['_id']
@@ -68,24 +76,26 @@ def delete_entry():
     return redirect(url_for('list'))
 
 
-#new entry creation based on the form action
+# new entry creation based on the form action
 @app.route('/story', methods=['GET', 'POST'])
 def register():
-    form = MyForm(request.form,csrf_enabled=False)
-    if request.method == 'POST' :
-        data = (form.title.data,form.story.data,form.criteria.data,form.value.data,form.estimation.data,form.status.data)
-        query_db("INSERT INTO user (story_title,user_story,acceptance_criteria,business_value,estimation,status) VALUES (?,?,?,?,?,?)",(data))
+    form = MyForm(request.form, csrf_enabled=False)
+    if request.method == 'POST':
+        data = (form.title.data, form.story.data, form.criteria.data,
+                form.value.data, form.estimation.data, form.status.data)
+        query_db("INSERT INTO user (story_title,user_story,acceptance_criteria,business_value,estimation,status) VALUES (?,?,?,?,?,?)", (data))
         return redirect(url_for('list'))
     return render_template('form.html', form=form)
 
 
-#reloads the form and populates with the corresponding data and updates the entry
+# reloads the form and populates with the corresponding data and updates
+# the entry
 @app.route('/story/<int:story_id>', methods=['GET', 'POST'])
 def edit(story_id):
     id_to_edit = story_id
     if request.method == 'GET':
         rows = query_db("select * from user where ID = {0}".format(story_id))
-        form = MyForm(request.form,csrf_enabled=False)
+        form = MyForm(request.form, csrf_enabled=False)
         for row in rows:
             form.title.data = row["story_title"]
             form.story.data = row["user_story"]
@@ -95,17 +105,17 @@ def edit(story_id):
             form.status.data = row['status']
             form.submit.name = "EDIT"
             form.submit.id = id_to_edit
-        return render_template('form.html',form=form)
-    if request.method == 'POST' :
-        form = MyForm(request.form,csrf_enabled=False)
-        data = [form.title.data,form.story.data,form.criteria.data,form.value.data,form.estimation.data,form.status.data,id_to_edit]
-        query_db("UPDATE user SET story_title=?,user_story=?,acceptance_criteria=?,business_value=?,estimation=?,status=? WHERE ID=?",(data))
+        return render_template('form.html', form=form)
+    if request.method == 'POST':
+        form = MyForm(request.form, csrf_enabled=False)
+        data = [form.title.data, form.story.data, form.criteria.data,
+                form.value.data, form.estimation.data, form.status.data, id_to_edit]
+        query_db("UPDATE user SET story_title=?,user_story=?,acceptance_criteria=?,business_value=?,estimation=?,status=? WHERE ID=?", (data))
         return redirect(url_for('list'))
 
 
-
 if __name__ == '__main__':
-   app.run()
+    app.run()
 
 
 with app.app_context():
