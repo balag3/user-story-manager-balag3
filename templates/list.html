@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Story Manager</title>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+<h1>User Story Manager</h1>
+<a href="{{ url_for('register') }}">{{ text|safe }}<button name="one">Add New User Story</button></a>
+<table border="1">
+<tr>
+<td width="1%">ID</td>
+<td>Story Title</td>
+<td>User Story</td>
+<td>Acceptance Criteria</td>
+<td>Business Value</td>
+<td>Estimation(h)</td>
+<td>Status</td>
+</tr>
+{% for row in rows %}
+            <tr>
+               <td>{{row["ID"]}}</td>
+               <td>{{row["story_title"]}}</td>
+               <td>{{row["user_story"]}}</td>
+               <td>{{row["acceptance_criteria"]}}</td>
+               <td>{{row['business_value']}}</td>
+               <td>{{row['estimation']}}</td>
+               <td>{{row['status']}}</td>
+               <td>
+                   <form action="{{ url_for('delete_entry') }}" method="POST">
+                       <input type="hidden" name="_id" value="{{row["ID"]}}" />
+                       <input type="submit" value="DELETE"/>
+                   </form>
+               </td>
+               <td>
+                 <form action="story/{{row["ID"]}}">
+                     <input type="hidden" name="_id" value="{{row["ID"]}}" />
+                     <input type="submit" value="EDIT"/>
+                 </form>
+               </td>
+            </tr>
+{% endfor %}
+</table>
+</body>
+</html>

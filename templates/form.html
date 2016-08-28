@@ -1,0 +1,42 @@
+
+
+<!-- {{form.status}} -->
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>User Story Manager  - Add new Story</title>
+</head>
+
+<body>
+  <h1>
+  {% if form.submit.name=='EDIT'%}
+  User Story Manager  - Edit Story
+  {% else %}
+  User Story Manager  - Add New Story
+  {% endif %}
+</h1>
+<!-- <form id="form" action="{{url_for('register')}}" method="post"> -->
+<form id="form" action= {% if form.submit.name=='EDIT'%}"{{form.submit.id}}"{% else %}"{{url_for('register')}}"{% endif %} method="post">
+<p>Story Title</p>
+<p>{{form.title(style="width: 1800px;",required="true")}}</p>
+<p>User Story</p>
+<p>{{form.story(style="width: 1800px; height: 250px;",required="true")}}</p>
+<p>Acceptance Criteria</p>
+<p>{{form.criteria(style="width: 1800px; height: 250px;",required="true")}}</p>
+<p>Business Value</p>
+<p>{{form.value(type="number",min="100",max="1500",step="100",required="true")}}</p>
+<p>Estimation (h)</p>
+<p>{{form.estimation(type="number",min="0.5",max="24",step="0.5",required="true")}}</p>
+<p>Status</p>
+<p>{{form.status}}</p>
+<p>
+{% if form.submit.name=='EDIT'%}
+{{form.submit(value="EDIT")}}
+{% else %}
+{{form.submit(value="SAVE")}}
+{% endif %}
+</p>
+
+</body>
+</html>
