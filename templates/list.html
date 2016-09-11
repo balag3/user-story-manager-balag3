@@ -1,14 +1,21 @@
-
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.min.css">
 <title>User Story Manager</title>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
-<body>
-<h1>User Story Manager</h1>
-<a href="{{ url_for('register') }}">{{ text|safe }}<button name="one">Add New User Story</button></a>
+<body style="padding-top: 70px;">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+      <a href="{{ url_for('register') }}">{{ text|safe }}<button name="one" class="btn btn-success">Add New User Story</button></a>
+      <a href="{{ url_for('list') }}">{{ text|safe }}<button name="two" class="btn btn-success">Home</button></a>
+  </div>
+</nav>
 <table border="1">
+<h1>User Story Manager</h1>
 <tr>
 <td width="1%">ID</td>
 <td>Story Title</td>
@@ -30,13 +37,13 @@
                <td>
                    <form action="{{ url_for('delete_entry') }}" method="POST">
                        <input type="hidden" name="_id" value="{{row["ID"]}}" />
-                       <input type="submit" value="DELETE"/>
+                       <input class="btn btn-danger" type="submit" value="DELETE"/>
                    </form>
                </td>
                <td>
                  <form action="story/{{row["ID"]}}">
                      <input type="hidden" name="_id" value="{{row["ID"]}}" />
-                     <input type="submit" value="EDIT"/>
+                     <input class="btn btn-success" type="submit" value="EDIT"/>
                  </form>
                </td>
             </tr>

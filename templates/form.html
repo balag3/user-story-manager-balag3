@@ -1,14 +1,23 @@
-
-
-<!-- {{form.status}} -->
 <!DOCTYPE html>
-<html>
-
-<head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous"> -->
+          <!-- Optional theme -->
+<link rel="stylesheet" href="https://bootswatch.com/superhero/bootstrap.min.css">
 <title>User Story Manager  - Add new Story</title>
 </head>
-
-<body>
+<body style="padding-top: 70px;">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+      <a href="{{ url_for('register') }}">{{ text|safe }}<button name="one" class="btn btn-success">Add New User Story</button></a>
+      <a href="{{ url_for('list') }}">{{ text|safe }}<button name="two" class="btn btn-success">Home</button></a>
+  </div>
+</nav>
   <h1>
   {% if form.submit.name=='EDIT'%}
   User Story Manager  - Edit Story
@@ -19,7 +28,11 @@
 <!-- <form id="form" action="{{url_for('register')}}" method="post"> -->
 <form id="form" action= {% if form.submit.name=='EDIT'%}"{{form.submit.id}}"{% else %}"{{url_for('register')}}"{% endif %} method="post">
 <p>Story Title</p>
-<p>{{form.title(style="width: 1800px;",required="true")}}</p>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">TITLE</span>
+  {{form.title(class="form-control",style="width: 1800px;",required="true")}}
+</div>
+
 <p>User Story</p>
 <p>{{form.story(style="width: 1800px; height: 250px;",required="true")}}</p>
 <p>Acceptance Criteria</p>
@@ -32,9 +45,9 @@
 <p>{{form.status}}</p>
 <p>
 {% if form.submit.name=='EDIT'%}
-{{form.submit(value="EDIT")}}
+{{form.submit(value="EDIT", class="btn btn-success")}}
 {% else %}
-{{form.submit(value="SAVE")}}
+{{form.submit(value="SAVE", class="btn btn-success")}}
 {% endif %}
 </p>
 

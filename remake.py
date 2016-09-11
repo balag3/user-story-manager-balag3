@@ -43,7 +43,7 @@ def close_connection(exception):
 # the form creator class(I could not applied the validator functions thats
 # why I placed them in the html code)
 class MyForm(Form):
-    title = TextAreaField('Title')
+    title = TextField('Title')
     story = TextAreaField('Story')
     criteria = TextAreaField('Criteria')
     value = IntegerField('Business Value')
