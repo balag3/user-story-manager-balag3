@@ -14,8 +14,8 @@
 <body style="padding-top: 70px;">
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-      <a href="{{ url_for('register') }}">{{ text|safe }}<button name="one" class="btn btn-success">Add New User Story</button></a>
-      <a href="{{ url_for('list') }}">{{ text|safe }}<button name="two" class="btn btn-success">Home</button></a>
+      <a href="{{ url_for('register') }}">{{ text|safe }}<button name="one" class="btn btn-success" data-toggle="tooltip" title="You would never find out what this button does...!">Add New User Story</button></a>
+      <a href="{{ url_for('list') }}">{{ text|safe }}<button name="two" class="btn btn-success" data-toggle="tooltip" title="Please go home!">Home</button></a>
   </div>
 </nav>
   <h1>
@@ -50,6 +50,10 @@
 {{form.submit(value="SAVE", class="btn btn-success")}}
 {% endif %}
 </p>
-
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 </body>
 </html>
